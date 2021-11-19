@@ -12,13 +12,24 @@
     <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      const ownVideo = document.createElement("video");
       const socket = io();
+      ownVideo.muted = true;
+      //
+      navigator.mediaDevices
+        .getUserMedia({
+          video: true,
+          audio: true,
+        })
+        .then((stream) => {
+          startVideo(ownVideo, stream);
+        });
+      //
       var peer = new Peer({
         host: "peerjs-server.herokuapp.com",
         secure: true,
         port: 443,
       });
-
       socket.on("connect", () => {
         console.log(socket.id);
       });
@@ -29,8 +40,39 @@
       socket.on("new-connected-user", (userId) => {
         console.log(`new user connected of id: ${userId}`);
       });
+      function startVideo(video, stream) {
+        video.srcObject = stream;
+        video.addEventListener("loadedmetadata", () => {
+          video.play();
+          console.log("playing");
+        });
+        document.getElementById("grid-layout").append(video);
+      }
     </script>
+    <style>
+      body {
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      #grid-layout {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 300px);
+        grid-auto-rows: 300px;
+        background-color: aqua;
+        width: 100%;
+        height: 100%;
+      }
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background-color: aliceblue;
+      }
+    </style>
   </head>
-
-  <body></body>
+  <body>
+    <div id="grid-layout"></div>
+  </body>
 </html>
