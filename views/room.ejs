@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      const Room_Id = "<%= roomId %>";
+      console.log(Room_Id);
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      socket.on("connect", () => {
+        console.log(socket.id);
+      });
+      socket.emit("join", Room_Id, 100);
+      socket.on("new-connected-user", (userId) => {
+        console.log(`new user connected of id: ${userId}`);
+      });
+    </script>
+  </head>
+
+  <body></body>
+</html>
