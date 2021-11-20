@@ -23,6 +23,9 @@ io.on("connection", (socket) => {
     console.log(`room id is ${roomId} and userId is ${userId}`);
     socket.join(roomId);
     socket.broadcast.to(roomId).emit("new-connected-user", userId);
+    socket.on("disconnect", () => {
+      socket.broadcast.to(roomId).emit("user-disconnected", userId);
+    });
   });
 });
 
