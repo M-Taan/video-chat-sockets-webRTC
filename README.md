@@ -1,6 +1,6 @@
 # video-chat-sockets-webTRC
 
-Learning how socket.io and WebTRC works.
+Learning how socket.io and WebRTC works.
 This project is just for learning purposes, it's a proof of concept and a way to get an idea of how to communicate through sockets.
 
 If you get stuck you can follow Kyle's tutorial on the project: https://www.youtube.com/watch?v=DvlyzDZDEq4&t=1330s
